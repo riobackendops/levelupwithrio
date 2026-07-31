@@ -549,5 +549,55 @@
   </div>
 </footer>
 
+<script>
+  // Heading fade-in on scroll into view
+  (function () {
+    var headings = document.querySelectorAll('.hero h1, .section-head h2, .intro h2, .cred-inline-heading, .close-section h2');
+    if (!headings.length) return;
+    headings.forEach(function (el) { el.classList.add('fade-heading'); });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-heading-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    headings.forEach(function (el) { observer.observe(el); });
+  })();
+
+  // Sparkle cursor trail
+  (function () {
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+    var lastSpawn = 0;
+    var minInterval = 55;
+
+    document.addEventListener('mousemove', function (e) {
+      var now = Date.now();
+      if (now - lastSpawn < minInterval) return;
+      lastSpawn = now;
+
+      var sparkle = document.createElement('span');
+      sparkle.className = 'cursor-sparkle';
+      sparkle.textContent = Math.random() > 0.5 ? '✦' : '✧';
+
+      var dx = (Math.random() - 0.5) * 40;
+      var dy = -20 - Math.random() * 30;
+      sparkle.style.left = e.clientX + 'px';
+      sparkle.style.top = e.clientY + 'px';
+      sparkle.style.setProperty('--dx', dx + 'px');
+      sparkle.style.setProperty('--dy', dy + 'px');
+      sparkle.style.color = Math.random() > 0.5 ? '#B71637' : '#DDB48A';
+      sparkle.style.fontSize = (10 + Math.random() * 8) + 'px';
+
+      document.body.appendChild(sparkle);
+      sparkle.addEventListener('animationend', function () { sparkle.remove(); });
+      setTimeout(function () { if (sparkle.parentNode) sparkle.remove(); }, 900);
+    }, { passive: true });
+  })();
+</script>
+
 </body>
 </html>
