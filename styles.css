@@ -391,7 +391,7 @@ section.tight { padding: 56px 0; }
 
 .service-check {
   list-style: none;
-  margin: 0;
+  margin: 0 0 28px;
   padding: 0;
   display: grid;
   gap: 9px;
