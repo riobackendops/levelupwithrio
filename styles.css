@@ -189,11 +189,7 @@ p { max-width: var(--max-line); }
 .site-header nav a:hover { color: var(--burgundy); }
 .site-header nav a.header-cta,
 .site-header nav a.header-cta:hover { color: var(--white); }
-.header-cta { display: none; }
-
-@media (min-width: 720px) {
-  .header-cta { display: inline-block; }
-}
+.header-cta { display: inline-block; }
 
 /* ---------- section rhythm ---------- */
 
