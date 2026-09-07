@@ -1342,7 +1342,7 @@ footer a { color: var(--sand); }
 }
 
 @media (max-width: 900px) {
-  .accordion-panel { flex-grow: 1 !important; min-width: 0 !important; }
+  .accordion-panel { flex: none !important; width: 100%; min-width: 0 !important; }
 }
 
 .accordion-panel-rail {
