@@ -1399,12 +1399,19 @@ footer a { color: var(--sand); }
 
 .accordion-media {
   position: relative;
-  height: 140px;
+  height: 200px;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 20px;
   background: var(--espresso);
   flex-shrink: 0;
+}
+
+.accordion-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .accordion-media-slide {
