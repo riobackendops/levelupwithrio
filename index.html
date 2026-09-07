@@ -1142,22 +1142,53 @@
 </script>
 
 <script>
-  // Heading fade-in on scroll into view
+  // Scroll reveal: fade + rise for text, cards, and other elements site-wide
   (function () {
-    var headings = document.querySelectorAll('.hero h1, .section-head h2, .intro h2, .cred-inline-heading, .close-section h2');
-    if (!headings.length) return;
-    headings.forEach(function (el) { el.classList.add('fade-heading'); });
+    var selectors = [
+      '.hero .eyebrow', '.hero h1', '.hero .lede', '.hero-ctas', '.photo-frame',
+      '.section-head',
+      '.intro-grid > div > p', '.intro-grid > div > a.text-link', '.intro-grid > div > a.btn',
+      '.intro-photo', '.photo-placeholder',
+      '.stat-cell',
+      '.service-card',
+      '.live-row', '.support-callout',
+      '.cta-band-inner > div', '.cta-band-inner > a',
+      '.fit-col',
+      '.compare-scroll',
+      '.accordion-row',
+      '.industries-list li',
+      '.steps-list li', '.process-sidebar',
+      '.audit-form-wrap',
+      '.testimonial-card',
+      '.faq-item',
+      '.team-card',
+      '.close-section .lede', '.contact-card'
+    ];
+
+    var items = Array.prototype.slice.call(document.querySelectorAll(selectors.join(',')));
+    if (!items.length) return;
+
+    var groups = new Map();
+    items.forEach(function (el) {
+      el.classList.add('reveal');
+      var parent = el.parentElement;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent).push(el);
+    });
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-heading-visible');
-          observer.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var siblings = groups.get(el.parentElement) || [el];
+        var idx = siblings.indexOf(el);
+        el.style.transitionDelay = Math.min(idx * 70, 350) + 'ms';
+        el.classList.add('reveal-visible');
+        observer.unobserve(el);
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    headings.forEach(function (el) { observer.observe(el); });
+    items.forEach(function (el) { observer.observe(el); });
   })();
 
   // Sparkle cursor trail
